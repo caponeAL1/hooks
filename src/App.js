@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+
+ 
 
 function App() {
+  // Retrieve the visitor count from local storage, or set it to 1 if it doesn't exist
+  const initialVisitorCount = parseInt(localStorage.getItem('visitorCount')) || 1;
+  const [visitorCount, setVisitorCount] = useState(initialVisitorCount);
+
+ 
+
+  // Update the visitor count in both state and local storage
+  const updateVisitorCount = () => {
+    const updatedCount = visitorCount + 1;
+    setVisitorCount(updatedCount);
+    localStorage.setItem('visitorCount', updatedCount.toString());
+  };
+
+ 
+
+  useEffect(() => {
+    console.log('Visitor count incremented: ' + visitorCount);
+  }, [visitorCount]);
+
+ 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <center>
+      <div className="App">
+        <form>
+          <input type="button" onClick={updateVisitorCount} value="Update Visitor" /> <br />
+          <b>You are Visitor </b> {visitorCount}
+        </form>
+      </div>
+    </center>
   );
 }
+
+ 
 
 export default App;
